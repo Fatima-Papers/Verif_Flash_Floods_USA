@@ -1,9 +1,9 @@
 #!/bin/bash
 
-##############################################################################################################
+################################################################################################################################
 # CODE DESCRIPTION
-# Retrieve_ecPoint retrieves ecPoint-Rainfall forecasts from ECFS. Files contain global rainfall forecasts for the considered accumulation 
-# period, ending at the time step indicated in the file name.
+# Retrieve_ecPoint retrieves ecPoint-Rainfall forecasts from ECFS. Files contain global rainfall forecasts for the considered  
+# accumulation period, ending at the time step indicated in the file name.
 
 # INPUT PARAMETERS DESCRIPTION
 # BaseDateS (date, in YYYYMMDD format): start forecast's basedate to retrieve
@@ -11,11 +11,11 @@
 # BaseTime (time, in H format, in UTC time): forecast's basetime to retrieve 
 # Acc (number, in H format, in hours): forecasts' accumulation period 
 # CodeVers (string): version of the code that was used to compute the forecasts.
-#                                  Available code versions are  listed in the following webpage:
-#                                  https://confluence.ecmwf.int/display/EVAL/Forecasts+Code
+#                    Available code versions are  listed in the following webpage:
+#                    https://confluence.ecmwf.int/display/EVAL/Forecasts+Code
 # CalVers (string): version of the calibration that was used to compute the forecasts.
-#                              Available calibration versions are listed in the following webpage:
-#                              https://confluence.ecmwf.int/display/EVAL/1.+ecPoint-Rainfall%3A+Developed+or+Under-Development+Calibrations                               
+#                   Available calibration versions are listed in the following webpage:
+#                   https://confluence.ecmwf.int/display/EVAL/1.+ecPoint-Rainfall%3A+Developed+or+Under-Development+Calibrations                              
 # Git_repo (string): repository's local path
 # DirOUT (string): relative path containing the retrieved forecasts
 
@@ -26,9 +26,9 @@ BaseTime=0
 Acc=12
 CodeVers="2.0.0"
 CalVers="1.1.0"
-Git_repo="/ec/vol/ecpoint/mofp/PhD/Papers2Write/FlashFloods_USA"
+Git_repo="/ec/vol/ecpoint_dev/mofp/Papers_2_Write/Verif_Flash_Floods_USA"
 DirOUT="Data/Raw/FC/ecPoint"
-##############################################################################################################
+################################################################################################################################
 
 
 # Setting general variables

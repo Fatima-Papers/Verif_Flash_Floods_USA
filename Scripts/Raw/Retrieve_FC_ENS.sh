@@ -1,10 +1,10 @@
 #!/bin/bash
 
-################################################################
+#############################################################################
 # CODE DESCRIPTION
 # Retrieve_FC_ENS.sh retrieves raw ECMWF ENS rainfall forecasts from MARS.
-# Files contain cumulative global rainfall forecasts up to the step indicated in 
-# the file name.
+# Files contain cumulative global rainfall forecasts up to the step indicated 
+# in the file name.
 
 # INPUT PARAMETERS DESCRIPTION
 # BaseDateS (date, in YYYYMMDD format): start forecast's basedate to retrieve
@@ -23,9 +23,9 @@ BaseTime=0
 StepS=0
 StepF=246
 DiscStep=6
-Git_repo="/ec/vol/ecpoint/mofp/PhD/Papers2Write/FlashFloods_USA"
+Git_repo="/ec/vol/ecpoint_dev/mofp/Papers_2_Write/Verif_Flash_Floods_USA"
 DirOUT="Data/Raw/FC/ENS"
-################################################################
+#############################################################################
 
 
 # Setting general variables
