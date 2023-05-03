@@ -1,0 +1,5 @@
+55,8,MACRO,Create_USA_Mask_ENS.mv
+359,8,NOTE,README.md
+1119,8,SHELL,Retrieve_FC_ENS.sh
+1370,8,SHELL,Retrieve_FC_ecPoint.sh
+531,8,NOTE,Retrieve_OBS_NOAA_Reports_README.txt
