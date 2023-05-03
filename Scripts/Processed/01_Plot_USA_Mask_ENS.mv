@@ -1,0 +1,74 @@
+# Metview Macro
+
+####################################################################################################
+# CODE DESCRIPTION
+# Create_USA_Mask_ENS.mv creates Ecuador's mask for the ECMWF ENS grid, and saves the mask as .grib.
+# NOTE: the code needs to be run only once to create the mask. The mask has been already created and 
+# stored permanently in DirOUT. The code was kept here only for reproducibility purposes. 
+
+# INPUT PARAMETERS DESCRIPTION
+# Git_repo (string): repository's local path
+# DirOUT (string): relative path where to store the mask
+
+# INPUT PARAMETERS
+Git_repo = "/ec/vol/ecpoint_dev/mofp/Papers_2_Write/Verif_Flash_Floods_USA"
+DirIN = "Data/Raw/USA_Mask_ENS"
+DirOUT = "Data/Plot/USA_Mask_ENS"
+####################################################################################################
+
+
+# Retrieving the ensemble orography
+print("Retrieving the ensemble orography...")
+orog = retrieve(
+    type   : "cf",
+    stream : "ef",
+    levtype : "sfc",
+    param   : "z",
+    grid: "o640"
+    ) / 9.81 
+
+
+# Retrieving the ensemble orography
+print(" ")
+print("Reading USA's mask...")
+usa = read(Git_repo & "/" & DirIN & "/Mask.grib")
+
+
+# Plotting USA's mask with the orography
+print(" ")
+print("Plotting USA's mask with the orography...")
+usa_orog = ((usa = 0) * 99999) + ((usa = 1) * orog) 
+
+geo_view = geoview(
+    map_projection      : "epsg:3857",
+    map_area_definition : "corners",
+    area                : [20,-130,60,-60]
+    )
+    
+coastlines = mcoast(
+    map_coastline_colour           : "charcoal",
+    map_coastline_thickness        : 1,
+    map_coastline_resolution       : "full",
+    map_coastline_sea_shade        : "on",
+    map_coastline_sea_shade_colour : "RGB(0.7398,0.9465,0.943)",
+    map_boundaries                 : "on",
+    map_boundaries_colour          : "charcoal",
+    map_boundaries_thickness       : 1
+    )
+
+contouring = mcont(
+    legend                       : "on", 
+    contour                      : "off",
+    contour_level_selection_type : "level_list",
+    contour_level_list           : [-10000, 0, 50, 250, 500, 750, 1200, 1500, 2000, 2500, 5000, 99999],
+    contour_label                : "off",
+    contour_shade                : "on",
+    contour_shade_technique      : "grid_shading",
+    contour_shade_colour_method  : "list",
+    contour_shade_colour_list    : ['black', 'RGB(0.0353,0.4392,0.2235)', 'RGB(0.3020,0.5725,0.2314)', 'RGB(0.4298,0.7810,0.3327)', 
+    'RGB(0.9525,0.9259,0.5534)', 'RGB(0.8706,0.7647,0.4235)', 'RGB(0.7333,0.4706,0.1765)', 'RGB(0.5882,0.2157,0.0392)', 'RGB(0.4549,0.2784,0.2902)', 'RGB(0.8235,0.8235,0.8235)', 'white']
+    )
+
+
+
+plot(usa_orog, geo_view, coastlines, contouring)
