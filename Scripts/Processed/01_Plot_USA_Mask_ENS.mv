@@ -1,20 +1,19 @@
 # Metview Macro
 
-####################################################################################################
+#########################################################################################
 # CODE DESCRIPTION
-# Create_USA_Mask_ENS.mv creates Ecuador's mask for the ECMWF ENS grid, and saves the mask as .grib.
-# NOTE: the code needs to be run only once to create the mask. The mask has been already created and 
-# stored permanently in DirOUT. The code was kept here only for reproducibility purposes. 
+# 01_Plot_USA_Mask_Orog_ENS.mv plots USA's mask and its orography for the ECMWF ENS grid.
 
 # INPUT PARAMETERS DESCRIPTION
 # Git_repo (string): repository's local path
-# DirOUT (string): relative path where to store the mask
+# DirIN (string): relative path where USA's mask can be found
+# DirOUT (string): relative path where to store the plot 
 
 # INPUT PARAMETERS
 Git_repo = "/ec/vol/ecpoint_dev/mofp/Papers_2_Write/Verif_Flash_Floods_USA"
 DirIN = "Data/Raw/USA_Mask_ENS"
-DirOUT = "Data/Plot/USA_Mask_ENS"
-####################################################################################################
+DirOUT = "Data/Plot/USA_Mask_Orog_ENS"
+#########################################################################################
 
 
 # Retrieving the ensemble orography
@@ -28,7 +27,7 @@ orog = retrieve(
     ) / 9.81 
 
 
-# Retrieving the ensemble orography
+# Reading USA's mask
 print(" ")
 print("Reading USA's mask...")
 usa = read(Git_repo & "/" & DirIN & "/Mask.grib")
@@ -42,7 +41,7 @@ usa_orog = ((usa = 0) * 99999) + ((usa = 1) * orog)
 geo_view = geoview(
     map_projection      : "epsg:3857",
     map_area_definition : "corners",
-    area                : [20,-130,60,-60]
+    area                : [20,-130,55,-60]
     )
     
 coastlines = mcoast(
@@ -53,7 +52,11 @@ coastlines = mcoast(
     map_coastline_sea_shade_colour : "RGB(0.7398,0.9465,0.943)",
     map_boundaries                 : "on",
     map_boundaries_colour          : "charcoal",
-    map_boundaries_thickness       : 1
+    map_boundaries_thickness       : 1,
+    map_grid_latitude_increment    : 5,
+    map_grid_longitude_increment   : 10,
+    map_grid_thickness             : 1,
+    map_grid_colour                : "charcoal"
     )
 
 contouring = mcont(
@@ -69,6 +72,10 @@ contouring = mcont(
     'RGB(0.9525,0.9259,0.5534)', 'RGB(0.8706,0.7647,0.4235)', 'RGB(0.7333,0.4706,0.1765)', 'RGB(0.5882,0.2157,0.0392)', 'RGB(0.4549,0.2784,0.2902)', 'RGB(0.8235,0.8235,0.8235)', 'white']
     )
 
-
-
-plot(usa_orog, geo_view, coastlines, contouring)
+# Saving the plot
+print("Saving the map plot ...")
+shell("mkdir -p " & Git_repo & "/" & DirOUT) 
+FileOUT = Git_repo & "/" & DirOUT & "/USA_Mask_Orog_ENS" 
+svg = png_output(output_name: FileOUT)
+setoutput(svg)
+plot(geo_view, usa_orog, contouring, coastlines)
